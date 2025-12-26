@@ -19,11 +19,9 @@
             padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         .container {
-            max-width: 600px;
             width: 100%;
             background: #2a2a2a;
             border-radius: 8px;
@@ -97,11 +95,37 @@
             position: relative;
         }
 
+        .input-wrapper {
+            position: relative;
+        }
+
         label {
             display: block;
             margin-bottom: 6px;
             color: #888;
             font-size: 0.75em;
+        }
+
+        .input-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .currency-select {
+            padding: 6px 10px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: #555;
         }
 
         .input-wrapper {
@@ -159,16 +183,11 @@
 
         .number-pad-popup {
             display: none;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 10px;
             background: #2a2a2a;
             border: 1px solid #333;
             border-radius: 8px;
             padding: 15px;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .number-pad-popup.show {
@@ -288,6 +307,37 @@
             font-size: 0.7em;
         }
 
+        .tradingview-widget-container {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            left: 0;
+            right: 0;
+        }
+
+        .tradingview-widget-container__widget {
+            height: 46px;
+            width: 100%;
+        }
+
+        .tradingview-widget-copyright {
+            font-size: 0.7em;
+            text-align: center;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .tradingview-widget-copyright a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .tradingview-widget-copyright .blue-text {
+            color: #888;
+        }
+
         @keyframes pulse {
             0%, 100% {
                 opacity: 1;
@@ -320,6 +370,43 @@
     <div class="container">
         <p class="subtitle">Real-Time Exchange Rates & Calculator</p>
 
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+            {
+            "symbols": [
+            {
+                    "proName": "BINANCE:XRPUSDT",
+                    "title": ""
+                },
+                {
+                    "proName": "BITKUB:XRPTHB",
+                    "title": ""
+                },
+                {
+                    "proName": "OANDA:XAUUSD",
+                    "title": ""
+                },{
+      "proName": "SAXO:XAUTHB",
+      "title": ""
+    },
+                {
+                    "proName": "BINANCE:BTCUSDT",
+                    "title": ""
+                }
+                
+            ],
+            "colorTheme": "dark",
+            "locale": "th_TH",
+            "largeChartUrl": "",
+            "isTransparent": true,
+            "showSymbolLogo": false
+            }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
+
         <div class="rates-container">
             <div class="rate-card">
                 <div class="rate-label">USD → THB</div>
@@ -341,7 +428,15 @@
         <div class="calculator-section">
             <h2 class="calculator-title">Calculator</h2>
             <div class="input-group">
-                <label for="thb-input">Enter Amount (THB)</label>
+                <div class="input-header">
+                    <label for="currency-select">Convert from:</label>
+                    <select id="currency-select" class="currency-select">
+                        <option value="THB" selected>THB</option>
+                        <option value="XRP">XRP</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+                <label for="thb-input" id="amount-label">Enter Amount (THB)</label>
                 <div class="input-wrapper">
                     <input type="number" id="thb-input" placeholder="0.00" step="0.01" min="0" readonly>
                     <div class="step-buttons">
@@ -349,28 +444,31 @@
                         <button class="step-btn" id="step-down">▼</button>
                     </div>
                 </div>
-                <button class="close-pad-btn" id="open-pad" style="margin-top: 8px; width: 100%;">Open Number Pad</button>
-            </div>
-
-            <div class="number-pad-popup" id="number-pad">
-                <div class="number-pad-grid">
-                    <button class="num-btn" data-num="1">1</button>
-                    <button class="num-btn" data-num="2">2</button>
-                    <button class="num-btn" data-num="3">3</button>
-                    <button class="num-btn" data-num="4">4</button>
-                    <button class="num-btn" data-num="5">5</button>
-                    <button class="num-btn" data-num="6">6</button>
-                    <button class="num-btn" data-num="7">7</button>
-                    <button class="num-btn" data-num="8">8</button>
-                    <button class="num-btn" data-num="9">9</button>
-                    <button class="num-btn" data-num=".">.</button>
-                    <button class="num-btn" data-num="0">0</button>
-                    <button class="num-btn clear" id="clear-input">Clear</button>
+                <button class="close-pad-btn" id="toggle-pad" style="margin-top: 8px; width: 100%;">Show Number Pad</button>
+                
+                <div class="number-pad-popup" id="number-pad">
+                    <div class="number-pad-grid">
+                        <button class="num-btn" data-num="1">1</button>
+                        <button class="num-btn" data-num="2">2</button>
+                        <button class="num-btn" data-num="3">3</button>
+                        <button class="num-btn" data-num="4">4</button>
+                        <button class="num-btn" data-num="5">5</button>
+                        <button class="num-btn" data-num="6">6</button>
+                        <button class="num-btn" data-num="7">7</button>
+                        <button class="num-btn" data-num="8">8</button>
+                        <button class="num-btn" data-num="9">9</button>
+                        <button class="num-btn" data-num=".">.</button>
+                        <button class="num-btn" data-num="0">0</button>
+                        <button class="num-btn clear" id="clear-input">Clear</button>
+                    </div>
                 </div>
-                <button class="close-pad-btn" id="close-pad">Close</button>
             </div>
 
             <div class="results">
+                <div class="result-card">
+                    <div class="result-label">THB</div>
+                    <div class="result-value" id="thb-result">0.00</div>
+                </div>
                 <div class="result-card">
                     <div class="result-label">XRP</div>
                     <div class="result-value" id="xrp-result">0.00</div>
@@ -465,18 +563,47 @@
 
         // Calculate conversions
         function calculate() {
-            const thbInput = parseFloat(document.getElementById('thb-input').value) || 0;
+            const inputValue = parseFloat(document.getElementById('thb-input').value) || 0;
+            const fromCurrency = document.getElementById('currency-select').value;
             
-            if (thbInput <= 0) {
+            if (inputValue <= 0) {
+                document.getElementById('thb-result').textContent = '0.00';
                 document.getElementById('xrp-result').textContent = '0.00';
                 document.getElementById('usdt-result').textContent = '0.00';
                 return;
             }
 
+            // Convert input to THB first
+            let thbAmount = 0;
+            if (fromCurrency === 'THB') {
+                thbAmount = inputValue;
+            } else if (fromCurrency === 'XRP') {
+                if (exchangeRates.xrpThb > 0) {
+                    thbAmount = inputValue * exchangeRates.xrpThb;
+                } else {
+                    document.getElementById('thb-result').textContent = 'N/A';
+                    document.getElementById('xrp-result').textContent = 'N/A';
+                    document.getElementById('usdt-result').textContent = 'N/A';
+                    return;
+                }
+            } else if (fromCurrency === 'USD') {
+                if (exchangeRates.usdThb > 0) {
+                    thbAmount = inputValue * exchangeRates.usdThb;
+                } else {
+                    document.getElementById('thb-result').textContent = 'N/A';
+                    document.getElementById('xrp-result').textContent = 'N/A';
+                    document.getElementById('usdt-result').textContent = 'N/A';
+                    return;
+                }
+            }
+
+            // Display THB result
+            document.getElementById('thb-result').textContent = thbAmount.toFixed(2);
+
             // Calculate XRP: THB / XRP-THB rate
             let xrpAmount = 0;
             if (exchangeRates.xrpThb > 0) {
-                xrpAmount = thbInput / exchangeRates.xrpThb;
+                xrpAmount = thbAmount / exchangeRates.xrpThb;
                 document.getElementById('xrp-result').textContent = xrpAmount.toFixed(6);
             } else {
                 document.getElementById('xrp-result').textContent = 'N/A';
@@ -487,12 +614,12 @@
             let usdtAmount = 0;
             if (exchangeRates.xrpThb > 0 && exchangeRates.xrpUsdt > 0) {
                 // Convert THB to XRP, then XRP to USDT using Binance rate
-                const xrpAmount = thbInput / exchangeRates.xrpThb;
-                usdtAmount = xrpAmount * exchangeRates.xrpUsdt;
+                const xrpFromThb = thbAmount / exchangeRates.xrpThb;
+                usdtAmount = xrpFromThb * exchangeRates.xrpUsdt;
                 document.getElementById('usdt-result').textContent = usdtAmount.toFixed(2);
             } else if (exchangeRates.usdThb > 0) {
                 // Fallback: Use USD-THB if XRP rates not available
-                const usdAmount = thbInput / exchangeRates.usdThb;
+                const usdAmount = thbAmount / exchangeRates.usdThb;
                 usdtAmount = usdAmount; // 1 USD ≈ 1 USDT
                 document.getElementById('usdt-result').textContent = usdtAmount.toFixed(2);
             } else {
@@ -522,30 +649,30 @@
             }
         }
 
+        // Currency selector functionality
+        const currencySelect = document.getElementById('currency-select');
+        const amountLabel = document.getElementById('amount-label');
+        const thbInput = document.getElementById('thb-input');
+
+        currencySelect.addEventListener('change', () => {
+            const selectedCurrency = currencySelect.value;
+            amountLabel.textContent = `Enter Amount (${selectedCurrency})`;
+            thbInput.placeholder = `0.00 ${selectedCurrency}`;
+            // Recalculate when currency changes
+            calculate();
+        });
+
         // Number pad functionality
         const numberPad = document.getElementById('number-pad');
-        const openPadBtn = document.getElementById('open-pad');
-        const closePadBtn = document.getElementById('close-pad');
-        const thbInput = document.getElementById('thb-input');
+        const togglePadBtn = document.getElementById('toggle-pad');
         const stepUpBtn = document.getElementById('step-up');
         const stepDownBtn = document.getElementById('step-down');
         const clearBtn = document.getElementById('clear-input');
 
-        // Open number pad
-        openPadBtn.addEventListener('click', () => {
-            numberPad.classList.add('show');
-        });
-
-        // Close number pad
-        closePadBtn.addEventListener('click', () => {
-            numberPad.classList.remove('show');
-        });
-
-        // Close pad when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!numberPad.contains(e.target) && e.target !== openPadBtn) {
-                numberPad.classList.remove('show');
-            }
+        // Toggle number pad show/hide
+        togglePadBtn.addEventListener('click', () => {
+            const isShowing = numberPad.classList.toggle('show');
+            togglePadBtn.textContent = isShowing ? 'Hide Number Pad' : 'Show Number Pad';
         });
 
         // Number pad buttons
@@ -599,19 +726,6 @@
         thbInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                calculate();
-                // Close number pad if open
-                if (numberPad.classList.contains('show')) {
-                    numberPad.classList.remove('show');
-                }
-            }
-        });
-
-        // Allow Enter key to work globally when number pad is open
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && numberPad.classList.contains('show')) {
-                e.preventDefault();
-                numberPad.classList.remove('show');
                 calculate();
             }
         });
