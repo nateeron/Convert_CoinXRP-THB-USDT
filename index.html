@@ -12,7 +12,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #1a1a1a;
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -25,24 +25,22 @@
         .container {
             max-width: 600px;
             width: 100%;
-            background: rgba(30, 30, 46, 0.95);
-            border-radius: 12px;
+            background: #2a2a2a;
+            border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
         }
 
         h1 {
             text-align: center;
             margin-bottom: 5px;
-            color: #00d4ff;
+            color: #ffffff;
             font-size: 1.8em;
-            text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            font-weight: 600;
         }
 
         .subtitle {
             text-align: center;
-            color: #a0a0a0;
+            color: #888;
             margin-bottom: 15px;
             font-size: 0.75em;
         }
@@ -55,32 +53,22 @@
         }
 
         .rate-card {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+            background: #1e1e1e;
+            border-radius: 6px;
             padding: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .rate-card:hover {
-            border-color: #00d4ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            border: 1px solid #333;
         }
 
         .rate-label {
             font-size: 0.7em;
-            color: #a0a0a0;
+            color: #888;
             margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .rate-value {
             font-size: 1.2em;
-            font-weight: bold;
-            color: #00d4ff;
-            text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+            color: #ffffff;
         }
 
         .rate-source {
@@ -90,47 +78,157 @@
         }
 
         .calculator-section {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
+            background: #1e1e1e;
+            border-radius: 6px;
             padding: 15px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid #333;
         }
 
         .calculator-title {
             font-size: 1.1em;
             margin-bottom: 12px;
-            color: #00d4ff;
+            color: #ffffff;
             text-align: center;
+            font-weight: 600;
         }
 
         .input-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         label {
             display: block;
             margin-bottom: 6px;
-            color: #a0a0a0;
+            color: #888;
             font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 5px;
+            align-items: center;
         }
 
         input[type="number"] {
-            width: 100%;
+            flex: 1;
             padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 6px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
             color: #ffffff;
             font-size: 1em;
-            transition: all 0.3s ease;
         }
 
         input[type="number"]:focus {
             outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            border-color: #555;
+        }
+
+        input[type="number"]:read-only {
+            cursor: pointer;
+        }
+
+        .step-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .step-btn {
+            width: 35px;
+            height: 25px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-btn:hover {
+            background: #444;
+        }
+
+        .step-btn:active {
+            background: #555;
+        }
+
+        .number-pad-popup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a2a2a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .number-pad-popup.show {
+            display: block;
+        }
+
+        .number-pad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 200px;
+        }
+
+        .num-btn {
+            width: 50px;
+            height: 50px;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .num-btn:hover {
+            background: #333;
+        }
+
+        .num-btn:active {
+            background: #444;
+        }
+
+        .num-btn.clear {
+            grid-column: span 2;
+            width: 100%;
+            background: #3a1a1a;
+        }
+
+        .num-btn.clear:hover {
+            background: #4a2a2a;
+        }
+
+        .close-pad-btn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .close-pad-btn:hover {
+            background: #444;
         }
 
         .results {
@@ -141,47 +239,45 @@
         }
 
         .result-card {
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 8px;
+            background: #1a1a1a;
+            border-radius: 6px;
             padding: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.5);
+            border: 1px solid #333;
             text-align: center;
         }
 
         .result-label {
             font-size: 0.75em;
-            color: #a0a0a0;
+            color: #888;
             margin-bottom: 6px;
-            text-transform: uppercase;
         }
 
         .result-value {
             font-size: 1.4em;
-            font-weight: bold;
-            color: #00d4ff;
-            text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+            color: #ffffff;
         }
 
         .status {
             text-align: center;
             margin-top: 12px;
             padding: 6px;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 0.75em;
         }
 
         .status.loading {
-            background: rgba(255, 193, 7, 0.2);
+            background: #2a2a2a;
             color: #ffc107;
         }
 
         .status.error {
-            background: rgba(244, 67, 54, 0.2);
+            background: #2a2a2a;
             color: #f44336;
         }
 
         .status.success {
-            background: rgba(76, 175, 80, 0.2);
+            background: #2a2a2a;
             color: #4caf50;
         }
 
@@ -222,7 +318,6 @@
 </head>
 <body>
     <div class="container">
-        <h1>💰 Convert Coin</h1>
         <p class="subtitle">Real-Time Exchange Rates & Calculator</p>
 
         <div class="rates-container">
@@ -247,7 +342,32 @@
             <h2 class="calculator-title">Calculator</h2>
             <div class="input-group">
                 <label for="thb-input">Enter Amount (THB)</label>
-                <input type="number" id="thb-input" placeholder="0.00" step="0.01" min="0">
+                <div class="input-wrapper">
+                    <input type="number" id="thb-input" placeholder="0.00" step="0.01" min="0" readonly>
+                    <div class="step-buttons">
+                        <button class="step-btn" id="step-up">▲</button>
+                        <button class="step-btn" id="step-down">▼</button>
+                    </div>
+                </div>
+                <button class="close-pad-btn" id="open-pad" style="margin-top: 8px; width: 100%;">Open Number Pad</button>
+            </div>
+
+            <div class="number-pad-popup" id="number-pad">
+                <div class="number-pad-grid">
+                    <button class="num-btn" data-num="1">1</button>
+                    <button class="num-btn" data-num="2">2</button>
+                    <button class="num-btn" data-num="3">3</button>
+                    <button class="num-btn" data-num="4">4</button>
+                    <button class="num-btn" data-num="5">5</button>
+                    <button class="num-btn" data-num="6">6</button>
+                    <button class="num-btn" data-num="7">7</button>
+                    <button class="num-btn" data-num="8">8</button>
+                    <button class="num-btn" data-num="9">9</button>
+                    <button class="num-btn" data-num=".">.</button>
+                    <button class="num-btn" data-num="0">0</button>
+                    <button class="num-btn clear" id="clear-input">Clear</button>
+                </div>
+                <button class="close-pad-btn" id="close-pad">Close</button>
             </div>
 
             <div class="results">
@@ -402,8 +522,102 @@
             }
         }
 
-        // Event listener for input
-        document.getElementById('thb-input').addEventListener('input', calculate);
+        // Number pad functionality
+        const numberPad = document.getElementById('number-pad');
+        const openPadBtn = document.getElementById('open-pad');
+        const closePadBtn = document.getElementById('close-pad');
+        const thbInput = document.getElementById('thb-input');
+        const stepUpBtn = document.getElementById('step-up');
+        const stepDownBtn = document.getElementById('step-down');
+        const clearBtn = document.getElementById('clear-input');
+
+        // Open number pad
+        openPadBtn.addEventListener('click', () => {
+            numberPad.classList.add('show');
+        });
+
+        // Close number pad
+        closePadBtn.addEventListener('click', () => {
+            numberPad.classList.remove('show');
+        });
+
+        // Close pad when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!numberPad.contains(e.target) && e.target !== openPadBtn) {
+                numberPad.classList.remove('show');
+            }
+        });
+
+        // Number pad buttons
+        document.querySelectorAll('.num-btn[data-num]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-num');
+                const currentValue = thbInput.value || '0';
+                
+                if (num === '.') {
+                    if (!currentValue.includes('.')) {
+                        thbInput.value = currentValue + '.';
+                    }
+                } else {
+                    if (currentValue === '0') {
+                        thbInput.value = num;
+                    } else {
+                        thbInput.value = currentValue + num;
+                    }
+                }
+                calculate();
+            });
+        });
+
+        // Clear input
+        clearBtn.addEventListener('click', () => {
+            thbInput.value = '0';
+            calculate();
+        });
+
+        // Step up button
+        stepUpBtn.addEventListener('click', () => {
+            const currentValue = parseFloat(thbInput.value) || 0;
+            const step = parseFloat(thbInput.getAttribute('step')) || 0.01;
+            thbInput.value = (currentValue + step).toFixed(2);
+            calculate();
+        });
+
+        // Step down button
+        stepDownBtn.addEventListener('click', () => {
+            const currentValue = parseFloat(thbInput.value) || 0;
+            const step = parseFloat(thbInput.getAttribute('step')) || 0.01;
+            const newValue = Math.max(0, currentValue - step);
+            thbInput.value = newValue.toFixed(2);
+            calculate();
+        });
+
+        // Event listener for input (if user types directly)
+        thbInput.addEventListener('input', calculate);
+
+        // Enter key support
+        thbInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                calculate();
+                // Close number pad if open
+                if (numberPad.classList.contains('show')) {
+                    numberPad.classList.remove('show');
+                }
+            }
+        });
+
+        // Allow Enter key to work globally when number pad is open
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && numberPad.classList.contains('show')) {
+                e.preventDefault();
+                numberPad.classList.remove('show');
+                calculate();
+            }
+        });
+
+        // Make input field editable (remove readonly)
+        thbInput.removeAttribute('readonly');
 
         // Initial fetch
         fetchAllRates();
